@@ -16,7 +16,7 @@ public class ToolsApplication {
 	// TODO Taskboard DONE get disc info
 	// TODO Taskboard DONE command for open tray
 	// TODO Taskboard DONE command for close tray
-	// TODO Taskboard Todo copy commands for different type of dvds
+	// TODO Taskboard DONE copy commands for different type of dvds
 	// TODO Taskboard Todo implementation of CopyManager
 	// TODO Taskboard Todo Jenkins onto rechner
 	// TODO Taskboard Todo activate Sonarqube

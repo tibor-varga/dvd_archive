@@ -62,3 +62,5 @@ cdrdao disk-info --device /dev/sr0
 blkid /dev/sr1
 /dev/sr1: UUID="2007-08-17-20-51-00-00" LABEL="Filmek 31. mese" TYPE="iso9660"
 
+## DVD into ISO
+dd if=/dev/cdrom of=image_name.iso
