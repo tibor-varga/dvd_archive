@@ -11,10 +11,15 @@ public class ToolsApplication {
 
 	}
 	// TODO Taskboard
-	// TODO Taskboard Todo DONE Profile introduce for UnixCommandExecutor versions
-	// TODO Taskboard Todo DONE get mount points
-	// TODO Taskboard Todo DONE get disc info
-	// TODO Taskboard Todo DONE command for open tray
-	// TODO Taskboard Todo DONE command for close tray
+	// TODO Taskboard DONE Profile introduce for UnixCommandExecutor versions
+	// TODO Taskboard DONE get mount points
+	// TODO Taskboard DONE get disc info
+	// TODO Taskboard DONE command for open tray
+	// TODO Taskboard DONE command for close tray
+	// TODO Taskboard Todo copy commands for different type of dvds
+	// TODO Taskboard Todo implementation of CopyManager
+	// TODO Taskboard Todo Jenkins onto rechner
+	// TODO Taskboard Todo activate Sonarqube
+	// TODO Taskboard Todo IT tests witc real dvds
 
 }
