@@ -3,50 +3,48 @@
  */
 package eu.vargasoft.tools.dvdarchive;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import lombok.extern.slf4j.Slf4j;
+import eu.vargasoft.tools.dvdarchive.model.Disc;
+import eu.vargasoft.tools.dvdarchive.model.DiscType;
+import eu.vargasoft.tools.dvdarchive.utils.ExecResult;
+import eu.vargasoft.tools.dvdarchive.utils.UnixCommandExecutor;
 
 /**
  * @author buxi
  *
  */
 @Component
-@Slf4j
 public class DiscController {
-	List<String> getMountPoints() throws IOException {
-		ArrayList<String> result = new ArrayList<String>();
-		String cmd = "lshw -C disk | grep sr | cut -d \":\" -f 2 | sort -u";
-		String s = null;
+	@Autowired
+	UnixCommandExecutor commandExecutor;
 
-		Process p = Runtime.getRuntime().exec(cmd);
+	public Set<String> getMountPoints() throws IOException {
+		// String cmd = "lshw -C disk | grep sr | cut -d \":\" -f 2 | sort -u";
+		String cmd = "lshw -C disk";
+		ExecResult commandResult = commandExecutor.execute(cmd, "/dev/sr*");
+		return UnixCommandExecutor.getExactMountPoints(commandResult);
+	}
 
-		try (BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
-				BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));) {
-
-			// read the output from the command
-			StringBuffer stdOut = new StringBuffer();
-			while ((s = stdInput.readLine()) != null) {
-				stdOut.append(s);
-			}
-			log.info("Here is the standard output of the command: {}", stdOut.toString());
-
-			// read any errors from the attempted command
-			StringBuffer stdErr = new StringBuffer();
-			while ((s = stdError.readLine()) != null) {
-				stdErr.append(s);
-			}
-			log.info("Here is the standard error of the command: {}", stdErr.toString());
-		} catch (IOException e) {
-			log.error("error occured: {}", e);
+	/**
+	 * blkid /dev/sr1 /dev/sr1: UUID="2007-08-17-20-51-00-00" LABEL="Filmek 31.
+	 * mese" TYPE="iso9660"
+	 * 
+	 * @param mountPoint
+	 * @throws IOException
+	 */
+	public Disc getDisc(String mountPoint) throws IOException {
+		String cmd = "blkid " + mountPoint;
+		ExecResult commandResult = commandExecutor.execute(cmd, "*");
+		// extract disc info
+		if (commandResult.getStdOut().size() > 0) {
+			String[] splits = commandResult.getStdOut().get(0).split("\"");
+			return Disc.builder().label(splits[3]).mountPoint(mountPoint).type(DiscType.valueOf(splits[5])).build();
 		}
-
-		return result;
+		return null;
 	}
 }

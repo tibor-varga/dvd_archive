@@ -3,7 +3,7 @@
  */
 package eu.vargasoft.tools.dvdarchive.model;
 
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,8 +15,9 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@AllArgsConstructor
+@Builder
 public class Disc {
 	private final String mountPoint;
-	private final DiskType type;
+	private final DiscType type;
+	private final String label;
 }

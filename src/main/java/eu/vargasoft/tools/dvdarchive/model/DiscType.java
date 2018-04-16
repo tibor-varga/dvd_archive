@@ -7,7 +7,7 @@ package eu.vargasoft.tools.dvdarchive.model;
  * @author buxi
  *
  */
-public enum DiskType {
+public enum DiscType {
 	/**
 	 * Audio CD
 	 */
