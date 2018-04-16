@@ -36,6 +36,25 @@ eject /dev/sr0
 ### close drive
 eject -t /dev/sr0
 
+### eject status
+eject -n -v /dev/sr0
+#### mounted
+eject: device name is `/dev/sr0'
+eject: expanded name is `/dev/sr0'
+eject: `/dev/sr0' is mounted at `/media/dvd0'
+eject: device is `/dev/sr0'
+eject: exiting due to -n/--noop option
+
+#### not mounted
+eject: device name is `/dev/sr0'
+eject: expanded name is `/dev/sr0'
+eject: `/dev/sr0' is not mounted
+eject: `/dev/sr0' is not a mount point
+eject: device is `/dev/sr0'
+eject: exiting due to -n/--noop option
+---------------------
+
+
 ### find out, if it is a CD 
 cdrdao disk-info --device /dev/sr0
 

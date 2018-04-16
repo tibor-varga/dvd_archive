@@ -4,6 +4,7 @@
 package eu.vargasoft.tools.dvdarchive;
 
 import java.io.IOException;
+import java.security.InvalidParameterException;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import eu.vargasoft.tools.dvdarchive.model.Disc;
 import eu.vargasoft.tools.dvdarchive.model.DiscType;
+import eu.vargasoft.tools.dvdarchive.model.TrayStatus;
 import eu.vargasoft.tools.dvdarchive.utils.ExecResult;
 import eu.vargasoft.tools.dvdarchive.utils.UnixCommandExecutorHelper;
 import eu.vargasoft.tools.dvdarchive.utils.UnixCommandExecutorInterface;
@@ -80,4 +82,24 @@ public class DiscController {
 		commandExecutor.execute(cmd, null);
 	}
 
+	/**
+	 * eject -n -v /dev/sr0
+	 * 
+	 * @param mountPoint
+	 * @throws IOException
+	 */
+	public TrayStatus getTrayStatus(String mountPoint) throws IOException {
+		String cmd = UnixCommands.EJECT_STATUS + mountPoint;
+		ExecResult commandResult = commandExecutor.execute(cmd, "mounted");
+		// extract disc info
+		if (commandResult.getStdOut().size() > 0) {
+			if (commandResult.getStdOut().get(0).contains("not")) {
+				return TrayStatus.NOT_MOUNTED;
+			} else {
+				return TrayStatus.MOUNTED;
+			}
+		} else {
+			throw new InvalidParameterException("Error by getting status for: " + mountPoint);
+		}
+	}
 }

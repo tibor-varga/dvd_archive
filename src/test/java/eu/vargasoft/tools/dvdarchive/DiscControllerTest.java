@@ -17,9 +17,11 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import eu.vargasoft.tools.dvdarchive.model.Disc;
 import eu.vargasoft.tools.dvdarchive.model.DiscType;
+import eu.vargasoft.tools.dvdarchive.model.TrayStatus;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = { TestConfig.class, DiscController.class})
+@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = { TestConfig.class,
+		DiscController.class })
 @ActiveProfiles("dev")
 public class DiscControllerTest {
 
@@ -42,5 +44,19 @@ public class DiscControllerTest {
 		assertEquals(UnixCommandExecutorMock.DEVSR0, disc.getMountPoint());
 		assertEquals("label1", disc.getLabel());
 		assertEquals(DiscType.ISO9660, disc.getType());
+	}
+
+	@Test
+	public void testGetTrayStatusNotMounted() throws IOException {
+		TrayStatus status = discController.getTrayStatus(UnixCommandExecutorMock.DEVSR0);
+		assertNotNull(status);
+		assertEquals(TrayStatus.NOT_MOUNTED, status);
+	}
+
+	@Test
+	public void testGetTrayStatusMounted() throws IOException {
+		TrayStatus status = discController.getTrayStatus(UnixCommandExecutorMock.DEVSR1);
+		assertNotNull(status);
+		assertEquals(TrayStatus.MOUNTED, status);
 	}
 }

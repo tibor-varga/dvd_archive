@@ -21,6 +21,8 @@ public class UnixCommandExecutorMock implements UnixCommandExecutorInterface {
 	public final static String DEVSR2 = "/dev/sr2";
 	public final static String DEVSR3 = "/dev/sr3";
 	public final static String GETDISC_SR0 = UnixCommands.BLKID + DEVSR0;
+	public final static String GET_EJECT_STATUS_NOT_MOUNTED = UnixCommands.EJECT_STATUS + DEVSR0;
+	public final static String GET_EJECT_STATUS_MOUNTED = UnixCommands.EJECT_STATUS + DEVSR1;
 
 	@Override
 	public ExecResult execute(String command, String stdoutFilter) throws IOException {
@@ -35,6 +37,14 @@ public class UnixCommandExecutorMock implements UnixCommandExecutorInterface {
 					.stdOut(Arrays.asList("logical name: /dev/sr0", " 	  logical name: /dev/sr1",
 							"     logical name: /dev/sr2", "logical name: /dev/sr3", "logical name: /dev/sr3"))
 					.build();
+
+		case GET_EJECT_STATUS_NOT_MOUNTED:
+			return ExecResult.builder().exitValue(0).stdOut(Arrays.asList("eject: `/dev/sr0' is not mounted")).build();
+
+		case GET_EJECT_STATUS_MOUNTED:
+			return ExecResult.builder().exitValue(0)
+					.stdOut(Arrays.asList("eject: `/dev/sr0' is mounted at `/media/dvd0'")).build();
+
 		default:
 			throw new InvalidParameterException("unknown command: " + command);
 		}
