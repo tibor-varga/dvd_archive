@@ -9,12 +9,13 @@ import org.junit.Test;
 
 import eu.vargasoft.tools.dvdarchive.utils.ExecResult;
 import eu.vargasoft.tools.dvdarchive.utils.UnixCommandExecutor;
+import eu.vargasoft.tools.dvdarchive.utils.UnixCommandExecutorInterface;
 
 public class UnixCommandExecutorTest {
 
 	@Test
 	public void testExecute() throws IOException {
-		UnixCommandExecutor commandExecutor = new UnixCommandExecutor();
+		UnixCommandExecutorInterface commandExecutor = new UnixCommandExecutor();
 
 		String cmd = "lshw -C disk";
 		ExecResult commandResult = commandExecutor.execute(cmd, "/dev/sr*");
