@@ -11,7 +11,10 @@ public class ToolsApplication {
 
 	}
 	// TODO Taskboard
-	// TODO Taskboard Todo Profile introduce for UnixCommandExecutor versions
-	// TODO Taskboard Todo
+	// TODO Taskboard Todo DONE Profile introduce for UnixCommandExecutor versions
+	// TODO Taskboard Todo DONE get mount points
+	// TODO Taskboard Todo DONE get disc info
+	// TODO Taskboard Todo DONE command for open tray
+	// TODO Taskboard Todo DONE command for close tray
 
 }

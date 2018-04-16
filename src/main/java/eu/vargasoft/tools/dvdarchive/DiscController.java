@@ -25,6 +25,12 @@ public class DiscController {
 	@Autowired
 	UnixCommandExecutorInterface commandExecutor;
 
+	/**
+	 * lshw -C disk | grep sr | cut -d \":\" -f 2 | sort -u
+	 * 
+	 * @return list of /dev/sr0, /dev/sr1
+	 * @throws IOException
+	 */
 	public Set<String> getMountPoints() throws IOException {
 		// String cmd = "lshw -C disk | grep sr | cut -d \":\" -f 2 | sort -u";
 
@@ -37,6 +43,7 @@ public class DiscController {
 	 * TYPE="iso9660"
 	 * 
 	 * @param mountPoint
+	 * @return disc information
 	 * @throws IOException
 	 */
 	public Disc getDisc(String mountPoint) throws IOException {
@@ -50,4 +57,27 @@ public class DiscController {
 		}
 		return null;
 	}
+
+	/**
+	 * eject /dev/sr0
+	 * 
+	 * @param mountPoint
+	 * @throws IOException
+	 */
+	public void openDisc(String mountPoint) throws IOException {
+		String cmd = UnixCommands.EJECT + mountPoint;
+		commandExecutor.execute(cmd, null);
+	}
+
+	/**
+	 * eject -t /dev/sr0
+	 * 
+	 * @param mountPoint
+	 * @throws IOException
+	 */
+	public void closeDisc(String mountPoint) throws IOException {
+		String cmd = UnixCommands.EJECT_CLOSE + mountPoint;
+		commandExecutor.execute(cmd, null);
+	}
+
 }
