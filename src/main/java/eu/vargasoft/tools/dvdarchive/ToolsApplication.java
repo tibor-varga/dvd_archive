@@ -40,6 +40,7 @@ public class ToolsApplication implements CommandLineRunner {
 	// TODO Taskboard Todo implementation of Audo CD Support
 	// TODO Taskboard Todo parallelizatin of copy tasks
 	// TODO Taskboard Todo Profiles in Spring Boot Start missing
+	// TODO Taskboard Todo Check System (unix commands, target dir, etc.)
 
 	@Override
 	public void run(String... args) throws Exception {
