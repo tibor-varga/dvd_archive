@@ -30,12 +30,13 @@ public class ToolsApplication implements CommandLineRunner {
 	// TODO Taskboard DONE copy commands for different type of dvds
 	// TODO Taskboard DONE implementation of CopyManager
 	// TODO Taskboard DONE Fix CopyManagerTest tests
+	// TODO Taskboard Todo parameters from properties
+	// TODO Taskboard Todo define target directories for cp and dd unix commands
 	// TODO Taskboard Todo refactor mountPoint->drive, directory->mountPoint
 	// TODO Taskboard Todo Jenkins onto rechner
 	// TODO Taskboard Todo activate Sonarqube
-	// TODO Taskboard Todo IT tests witc real dvds
+	// TODO Taskboard Todo IT tests with real dvds
 	// TODO Taskboard Todo implementation of Audo CD Support
-	// TODO Taskboard Todo parameters from properties
 	// TODO Taskboard Todo parallelizatin of copy tasks
 	// TODO Taskboard Todo Profiles in Spring Boot Start missing
 
