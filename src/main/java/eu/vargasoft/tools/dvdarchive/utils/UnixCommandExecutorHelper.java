@@ -42,4 +42,7 @@ public class UnixCommandExecutorHelper {
 		return result;
 	}
 
+	public static String generateDirectoryNameFromDiscLabel(String discLabel) {
+		return discLabel.replace(" ", "-");
+	}
 }

@@ -3,6 +3,8 @@
  */
 package eu.vargasoft.tools.dvdarchive.model;
 
+import eu.vargasoft.tools.dvdarchive.utils.UnixCommands;
+
 /**
  * @author buxi
  *
@@ -17,6 +19,6 @@ public class Iso9660CopyUnixCommand implements DiscCopyUnixCommand {
 
 	@Override
 	public String getUnixCommand(String source, String destination) {
-		return "dd if=" + source + " of=" + destination;
+		return String.format(UnixCommands.DD, source, destination);
 	}
 }

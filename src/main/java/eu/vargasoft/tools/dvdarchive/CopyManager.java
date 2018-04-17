@@ -16,7 +16,9 @@ import eu.vargasoft.tools.dvdarchive.model.DiscCopyUnixCommand;
 import eu.vargasoft.tools.dvdarchive.model.ExecResult;
 import eu.vargasoft.tools.dvdarchive.model.TrayInfo;
 import eu.vargasoft.tools.dvdarchive.model.TrayStatus;
+import eu.vargasoft.tools.dvdarchive.utils.UnixCommandExecutorHelper;
 import eu.vargasoft.tools.dvdarchive.utils.UnixCommandExecutorInterface;
+import eu.vargasoft.tools.dvdarchive.utils.UnixCommands;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -58,9 +60,13 @@ public class CopyManager {
 			DiscCopyUnixCommand copyCommand = DiscCopyUnixCommandFactory.createUnixCommand(disc.getType());
 			log.debug("copy command: {}", copyCommand);
 
+			// create target directory
+			String targetDir = configProperties.getMainTargetDir()
+					+ UnixCommandExecutorHelper.generateDirectoryNameFromDiscLabel(disc.getLabel());
+			commandExecutor.execute(String.format(UnixCommands.MKDIR, targetDir), null);
+
 			// execute copy
-			ExecResult copyResult = commandExecutor
-					.execute(copyCommand.getUnixCommand(mountPoint, configProperties.getMainTargetDir()), null);
+			ExecResult copyResult = commandExecutor.execute(copyCommand.getUnixCommand(mountPoint, targetDir), null);
 			log.info("Copy finished: {}", copyResult);
 			return CopyResult.builder().disc(disc).execResult(copyResult).build();
 		} else {

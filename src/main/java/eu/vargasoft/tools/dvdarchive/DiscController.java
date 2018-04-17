@@ -51,7 +51,7 @@ public class DiscController {
 	 * @throws IOException
 	 */
 	public Disc getDisc(String mountPoint, TrayInfo trayInfo) throws IOException {
-		String cmd = UnixCommands.BLKID + mountPoint;
+		String cmd = String.format(UnixCommands.BLKID, mountPoint);
 		ExecResult commandResult = commandExecutor.execute(cmd, null);
 		// extract disc info
 		if (commandResult.getStdOut().size() > 0) {
@@ -69,7 +69,7 @@ public class DiscController {
 	 * @throws IOException
 	 */
 	public void openDisc(String mountPoint) throws IOException {
-		String cmd = UnixCommands.EJECT + mountPoint;
+		String cmd = String.format(UnixCommands.EJECT, mountPoint);
 		commandExecutor.execute(cmd, null);
 	}
 
@@ -80,7 +80,7 @@ public class DiscController {
 	 * @throws IOException
 	 */
 	public void closeDisc(String mountPoint) throws IOException {
-		String cmd = UnixCommands.EJECT_CLOSE + mountPoint;
+		String cmd = String.format(UnixCommands.EJECT_CLOSE, mountPoint);
 		commandExecutor.execute(cmd, null);
 	}
 
@@ -93,7 +93,7 @@ public class DiscController {
 	 * @throws IOException
 	 */
 	public TrayInfo getTrayInfo(String mountPoint) throws IOException {
-		String cmd = UnixCommands.EJECT_STATUS + mountPoint;
+		String cmd = String.format(UnixCommands.EJECT_STATUS, mountPoint);
 		ExecResult commandResult = commandExecutor.execute(cmd, "mounted");
 		// extract disc info
 		if (commandResult.getStdOut().size() > 0) {
