@@ -11,7 +11,8 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import eu.vargasoft.tools.dvdarchive.utils.ExecResult.ExecResultBuilder;
+import eu.vargasoft.tools.dvdarchive.model.ExecResult;
+import eu.vargasoft.tools.dvdarchive.model.ExecResult.ExecResultBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 @Component
@@ -33,14 +34,13 @@ public class UnixCommandExecutor implements UnixCommandExecutorInterface {
 				BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));) {
 			List<String> filteredStdout;
 			if (StringUtils.isEmpty(stdoutFilter)) {
+				// unfiltered standard output
+				filteredStdout = stdInput.lines().collect(Collectors.<String>toList());
+			} else {
 				// Compile regex as predicate
-
 				Predicate<String> filter = Pattern.compile(stdoutFilter).asPredicate();
 				// read the output from the command
 				filteredStdout = stdInput.lines().filter(filter).collect(Collectors.<String>toList());
-			} else {
-				// unfiltered standard output
-				filteredStdout = stdInput.lines().collect(Collectors.<String>toList());
 			}
 
 			builder.stdOut(filteredStdout);

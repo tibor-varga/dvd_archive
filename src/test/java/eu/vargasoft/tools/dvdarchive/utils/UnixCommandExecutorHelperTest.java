@@ -12,6 +12,8 @@ import java.util.Set;
 
 import org.junit.Test;
 
+import eu.vargasoft.tools.dvdarchive.model.ExecResult;
+
 public class UnixCommandExecutorHelperTest {
 
 	@Test
@@ -22,7 +24,7 @@ public class UnixCommandExecutorHelperTest {
 		stdOut.add("  logical name: /dev/sr0");
 		stdOut.add("  logical name: /dev/sr2");
 
-		ExecResult commandResult = new ExecResult(stdOut, null, 0);
+		ExecResult commandResult = ExecResult.builder().stdOut(stdOut).exitValue(0).stdErr(null).build();
 		Set<String> result = UnixCommandExecutorHelper.getExactMountPoints(commandResult);
 
 		assertNotNull(result);
@@ -41,7 +43,7 @@ public class UnixCommandExecutorHelperTest {
 		stdOut.add("  logical name /dev/sx0");
 		stdOut.add("  logical name /dev/sx2");
 
-		ExecResult commandResult = new ExecResult(stdOut, null, 0);
+		ExecResult commandResult = ExecResult.builder().stdOut(stdOut).exitValue(0).stdErr(null).build();
 		Set<String> result = UnixCommandExecutorHelper.getExactMountPoints(commandResult);
 
 		assertNotNull(result);

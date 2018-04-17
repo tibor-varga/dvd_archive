@@ -20,4 +20,5 @@ public class Disc {
 	private final String mountPoint;
 	private final DiscType type;
 	private final String label;
+	private final TrayInfo trayInfo;
 }

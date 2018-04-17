@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import eu.vargasoft.tools.dvdarchive.utils.ExecResult;
+import eu.vargasoft.tools.dvdarchive.model.ExecResult;
 import eu.vargasoft.tools.dvdarchive.utils.UnixCommandExecutor;
 import eu.vargasoft.tools.dvdarchive.utils.UnixCommandExecutorInterface;
 

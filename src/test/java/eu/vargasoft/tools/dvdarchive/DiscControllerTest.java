@@ -17,7 +17,9 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import eu.vargasoft.tools.dvdarchive.model.Disc;
 import eu.vargasoft.tools.dvdarchive.model.DiscType;
+import eu.vargasoft.tools.dvdarchive.model.TrayInfo;
 import eu.vargasoft.tools.dvdarchive.model.TrayStatus;
+import eu.vargasoft.tools.dvdarchive.utils.UnixCommandExecutorMock;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = { TestConfig.class,
@@ -39,7 +41,8 @@ public class DiscControllerTest {
 
 	@Test
 	public void testGetDisc0() throws IOException {
-		Disc disc = discController.getDisc(UnixCommandExecutorMock.DEVSR0);
+		Disc disc = discController.getDisc(UnixCommandExecutorMock.DEVSR0,
+				TrayInfo.builder().status(TrayStatus.MOUNTED).directory(UnixCommandExecutorMock.MEDIA_DVD0).build());
 		assertNotNull(disc);
 		assertEquals(UnixCommandExecutorMock.DEVSR0, disc.getMountPoint());
 		assertEquals("label0", disc.getLabel());
@@ -48,7 +51,8 @@ public class DiscControllerTest {
 
 	@Test
 	public void testGetDisc1() throws IOException {
-		Disc disc = discController.getDisc(UnixCommandExecutorMock.DEVSR1);
+		Disc disc = discController.getDisc(UnixCommandExecutorMock.DEVSR1,
+				TrayInfo.builder().status(TrayStatus.MOUNTED).directory(UnixCommandExecutorMock.MEDIA_DVD1).build());
 		assertNotNull(disc);
 		assertEquals(UnixCommandExecutorMock.DEVSR1, disc.getMountPoint());
 		assertEquals("label1", disc.getLabel());
@@ -57,7 +61,8 @@ public class DiscControllerTest {
 
 	@Test
 	public void testGetDisc2() throws IOException {
-		Disc disc = discController.getDisc(UnixCommandExecutorMock.DEVSR2);
+		Disc disc = discController.getDisc(UnixCommandExecutorMock.DEVSR2,
+				TrayInfo.builder().status(TrayStatus.MOUNTED).directory(UnixCommandExecutorMock.MEDIA_DVD2).build());
 		assertNotNull(disc);
 		assertEquals(UnixCommandExecutorMock.DEVSR2, disc.getMountPoint());
 		assertEquals("label2", disc.getLabel());
@@ -66,7 +71,8 @@ public class DiscControllerTest {
 
 	@Test
 	public void testGetDisc3() throws IOException {
-		Disc disc = discController.getDisc(UnixCommandExecutorMock.DEVSR3);
+		Disc disc = discController.getDisc(UnixCommandExecutorMock.DEVSR3,
+				TrayInfo.builder().status(TrayStatus.MOUNTED).directory(UnixCommandExecutorMock.MEDIA_DVD3).build());
 		assertNotNull(disc);
 		assertEquals(UnixCommandExecutorMock.DEVSR3, disc.getMountPoint());
 		assertEquals("label3", disc.getLabel());
@@ -75,15 +81,15 @@ public class DiscControllerTest {
 
 	@Test
 	public void testGetTrayStatusNotMounted() throws IOException {
-		TrayStatus status = discController.getTrayStatus(UnixCommandExecutorMock.DEVSR0);
-		assertNotNull(status);
-		assertEquals(TrayStatus.NOT_MOUNTED, status);
+		TrayInfo trayInfo = discController.getTrayInfo(UnixCommandExecutorMock.DEVSR0);
+		assertNotNull(trayInfo);
+		assertEquals(TrayStatus.NOT_MOUNTED, trayInfo.getStatus());
 	}
 
 	@Test
 	public void testGetTrayStatusMounted() throws IOException {
-		TrayStatus status = discController.getTrayStatus(UnixCommandExecutorMock.DEVSR1);
-		assertNotNull(status);
-		assertEquals(TrayStatus.MOUNTED, status);
+		TrayInfo trayInfo = discController.getTrayInfo(UnixCommandExecutorMock.DEVSR1);
+		assertNotNull(trayInfo);
+		assertEquals(TrayStatus.MOUNTED, trayInfo.getStatus());
 	}
 }
