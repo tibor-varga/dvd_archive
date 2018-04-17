@@ -28,6 +28,7 @@ public class UnixCommandExecutor implements UnixCommandExecutorInterface {
 	@Override
 	public ExecResult execute(String command, String stdoutFilter) throws IOException {
 		String s = null;
+		log.info("executing command: {} with stdout filter: {}", command, stdoutFilter);
 		Process p = Runtime.getRuntime().exec(command);
 		ExecResultBuilder builder = ExecResult.builder();
 		try (BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));

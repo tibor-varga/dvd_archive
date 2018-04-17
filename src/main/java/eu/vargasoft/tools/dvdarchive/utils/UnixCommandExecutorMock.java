@@ -40,6 +40,7 @@ public class UnixCommandExecutorMock implements UnixCommandExecutorInterface {
 
 	@Override
 	public ExecResult execute(String command, String stdoutFilter) throws IOException {
+		log.info("executing command: {} with stdout filter: {}", command, stdoutFilter);
 		switch (command) {
 		case GETDISC_SR0:
 			return ExecResult.builder().exitValue(0)
