@@ -33,7 +33,8 @@ public class CopyManager {
 	@Autowired
 	UnixCommandExecutorInterface commandExecutor;
 
-	private String destination;
+	@Autowired
+	ConfigurationProperties configProperties;
 
 	public HashMap<String, CopyResult> copyAllDiscs() throws IOException {
 		HashMap<String, CopyResult> copyStatus = new HashMap<String, CopyResult>();
@@ -58,7 +59,8 @@ public class CopyManager {
 			log.debug("copy command: {}", copyCommand);
 
 			// execute copy
-			ExecResult copyResult = commandExecutor.execute(copyCommand.getUnixCommand(mountPoint, destination), null);
+			ExecResult copyResult = commandExecutor
+					.execute(copyCommand.getUnixCommand(mountPoint, configProperties.getMainTargetDir()), null);
 			log.info("Copy finished: {}", copyResult);
 			return CopyResult.builder().disc(disc).execResult(copyResult).build();
 		} else {

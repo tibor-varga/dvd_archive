@@ -31,9 +31,9 @@ public class ToolsApplication implements CommandLineRunner {
 	// TODO Taskboard DONE implementation of CopyManager
 	// TODO Taskboard DONE Fix CopyManagerTest tests
 	// TODO Taskboard DONE Jenkins onto rechner
+	// TODO Taskboard DONE parameters from properties
+	// TODO Taskboard DONE define target directories for cp and dd unix commands
 
-	// TODO Taskboard Todo parameters from properties
-	// TODO Taskboard Todo define target directories for cp and dd unix commands
 	// TODO Taskboard Todo refactor mountPoint->drive, directory->mountPoint
 	// TODO Taskboard Todo activate Sonarqube
 	// TODO Taskboard Todo IT tests with real dvds
