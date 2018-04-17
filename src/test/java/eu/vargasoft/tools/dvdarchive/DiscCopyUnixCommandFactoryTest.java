@@ -4,12 +4,19 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import eu.vargasoft.tools.dvdarchive.model.DiscCopyUnixCommand;
 import eu.vargasoft.tools.dvdarchive.model.DiscType;
 import eu.vargasoft.tools.dvdarchive.model.Iso9660CopyUnixCommand;
 import eu.vargasoft.tools.dvdarchive.model.UdfCopyUnixCommand;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@ActiveProfiles("dev")
 public class DiscCopyUnixCommandFactoryTest {
 
 	@Test
