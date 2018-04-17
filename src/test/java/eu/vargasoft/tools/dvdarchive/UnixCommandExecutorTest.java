@@ -28,6 +28,6 @@ public class UnixCommandExecutorTest {
 		String cmd = "lshw -C disk";
 		ExecResult commandResult = commandExecutor.execute(cmd, "/dev/sr*");
 		assertNotNull(commandResult);
-		assertEquals(0, commandResult.getExitValue());
+		assertEquals(1, commandResult.getExitValue());
 	}
 }
