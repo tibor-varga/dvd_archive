@@ -16,6 +16,6 @@ public class UdfCopyUnixCommand implements DiscCopyUnixCommand {
 	 */
 	@Override
 	public String getUnixCommand(String source, String destination) {
-		return "dd if=" + source + " of=" + destination;
+		return "cp " + source + " " + destination;
 	}
 }

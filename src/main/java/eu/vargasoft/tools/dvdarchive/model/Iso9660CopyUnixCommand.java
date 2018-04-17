@@ -17,6 +17,6 @@ public class Iso9660CopyUnixCommand implements DiscCopyUnixCommand {
 
 	@Override
 	public String getUnixCommand(String source, String destination) {
-		return "cp " + source + " " + destination;
+		return "dd if=" + source + " of=" + destination;
 	}
 }
