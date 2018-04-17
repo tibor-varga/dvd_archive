@@ -2,6 +2,7 @@ package eu.vargasoft.tools.dvdarchive.utils;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -15,6 +16,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import eu.vargasoft.tools.dvdarchive.CopyManager;
 import eu.vargasoft.tools.dvdarchive.model.CopyResult;
+import eu.vargasoft.tools.dvdarchive.model.Disc;
+import eu.vargasoft.tools.dvdarchive.model.DiscType;
+import eu.vargasoft.tools.dvdarchive.model.ExecResult;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -27,11 +31,23 @@ public class CopyManagerTest {
 	@Test
 	public void testCopySr0() throws IOException {
 		CopyResult result = copyManager.copyDisk(UnixCommandExecutorMock.DEVSR1);
-		assertNotNull(result);
-		assertNotNull(result.getDisc());
-		assertNotNull(result.getExecResult());
+		Disc disc = checkCopyResult(result);
 
-		assertEquals(UnixCommandExecutorMock.MEDIA_DVD1, result.getDisc().getTrayInfo().getDirectory());
+		assertEquals(UnixCommandExecutorMock.MEDIA_DVD1, disc.getTrayInfo().getDirectory());
+	}
+
+	private Disc checkCopyResult(CopyResult result) {
+		assertNotNull(result);
+		Disc disc = result.getDisc();
+		assertNotNull(disc);
+		ExecResult execResult = result.getExecResult();
+		assertNotNull(execResult);
+		if (disc.getType() == DiscType.UDF) {
+			assertTrue(execResult.getStdOut().get(0).contains(" cp "));
+		} else if (disc.getType() == DiscType.ISO9660) {
+			assertTrue(execResult.getStdOut().get(0).contains(" dd "));
+		}
+		return disc;
 	}
 
 	@Test
@@ -39,5 +55,11 @@ public class CopyManagerTest {
 		HashMap<String, CopyResult> result = copyManager.copyAllDiscs();
 		assertNotNull(result);
 		assertEquals(4, result.size());
+
+		for (CopyResult copyResult : result.values()) {
+			if (copyResult != null) {
+				checkCopyResult(copyResult);
+			}
+		}
 	}
 }
