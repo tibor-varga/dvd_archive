@@ -15,5 +15,5 @@ public final class UnixCommands {
 	public static final String EJECT_STATUS = "/usr/bin/eject -n -v %s";
 	public static final String MKDIR = "/bin/mkdir %s";
 	public static final String DD = "/bin/dd if=%s of=%s/%s.iso";
-	public static final String CP = "/bin/cp -r %s/* %s/";
+	public static final String CP = "/usr/bin/rsync -avq %s/ %s/";
 }
