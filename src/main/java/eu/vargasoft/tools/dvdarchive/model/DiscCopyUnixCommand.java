@@ -8,5 +8,5 @@ package eu.vargasoft.tools.dvdarchive.model;
  *
  */
 public interface DiscCopyUnixCommand {
-	public String getUnixCommand(final String source, final String destination);
+	public String getUnixCommand(final Disc disc, final String destination);
 }
