@@ -46,7 +46,7 @@ public class CopyManagerTest {
 			assertTrue(execResult.getStdOut().get(0).contains("dd "));
 			assertTrue(execResult.getStdOut().get(0).contains("sr"));
 		} else if (disc.getType() == DiscType.ISO9660) {
-			assertTrue(execResult.getStdOut().get(0).contains("cp "));
+			assertTrue(execResult.getStdOut().get(0).contains("rsync "));
 			assertTrue(execResult.getStdOut().get(0).contains("media"));
 		}
 		return disc;

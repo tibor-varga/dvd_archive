@@ -44,8 +44,13 @@ public class CopyManager {
 		for (String mountPoint : mountPoints) {
 			CopyResult copyResult = copyDisk(mountPoint);
 			copyStatus.put(mountPoint, copyResult);
+			eject(mountPoint);
 		}
 		return copyStatus;
+	}
+
+	private void eject(String mountPoint) throws IOException, InterruptedException {
+		commandExecutor.execute(String.format(UnixCommands.EJECT, mountPoint), null);
 	}
 
 	public CopyResult copyDisk(String mountPoint) throws IOException, InterruptedException {
