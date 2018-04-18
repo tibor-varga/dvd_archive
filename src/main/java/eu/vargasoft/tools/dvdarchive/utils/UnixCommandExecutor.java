@@ -26,10 +26,11 @@ public class UnixCommandExecutor implements UnixCommandExecutorInterface {
 	 * .lang.String, java.lang.String)
 	 */
 	@Override
-	public ExecResult execute(String command, String stdoutFilter) throws IOException {
+	public ExecResult execute(String command, String stdoutFilter) throws IOException, InterruptedException {
 		String s = null;
 		log.info("executing command: {} with stdout filter: {}", command, stdoutFilter);
 		Process p = Runtime.getRuntime().exec(command);
+		p.waitFor();
 		ExecResultBuilder builder = ExecResult.builder();
 		try (BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 				BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));) {

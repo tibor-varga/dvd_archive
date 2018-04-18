@@ -29,7 +29,7 @@ public class DiscControllerTest {
 	private DiscController discController;
 
 	@Test
-	public void testGetMountPoints() throws IOException {
+	public void testGetMountPoints() throws IOException, InterruptedException {
 		Set<String> result = discController.getMountPoints();
 		assertNotNull(result);
 		assertTrue(result.contains(UnixCommandExecutorMock.DEVSR0));
@@ -38,7 +38,7 @@ public class DiscControllerTest {
 	}
 
 	@Test
-	public void testGetDisc0() throws IOException {
+	public void testGetDisc0() throws IOException, InterruptedException {
 		Disc disc = discController.getDisc(UnixCommandExecutorMock.DEVSR0,
 				TrayInfo.builder().status(TrayStatus.MOUNTED).directory(UnixCommandExecutorMock.MEDIA_DVD0).build());
 		assertNotNull(disc);
@@ -48,7 +48,7 @@ public class DiscControllerTest {
 	}
 
 	@Test
-	public void testGetDisc1() throws IOException {
+	public void testGetDisc1() throws IOException, InterruptedException {
 		Disc disc = discController.getDisc(UnixCommandExecutorMock.DEVSR1,
 				TrayInfo.builder().status(TrayStatus.MOUNTED).directory(UnixCommandExecutorMock.MEDIA_DVD1).build());
 		assertNotNull(disc);
@@ -58,7 +58,7 @@ public class DiscControllerTest {
 	}
 
 	@Test
-	public void testGetDisc2() throws IOException {
+	public void testGetDisc2() throws IOException, InterruptedException {
 		Disc disc = discController.getDisc(UnixCommandExecutorMock.DEVSR2,
 				TrayInfo.builder().status(TrayStatus.MOUNTED).directory(UnixCommandExecutorMock.MEDIA_DVD2).build());
 		assertNotNull(disc);
@@ -68,7 +68,7 @@ public class DiscControllerTest {
 	}
 
 	@Test
-	public void testGetDisc3() throws IOException {
+	public void testGetDisc3() throws IOException, InterruptedException {
 		Disc disc = discController.getDisc(UnixCommandExecutorMock.DEVSR3,
 				TrayInfo.builder().status(TrayStatus.MOUNTED).directory(UnixCommandExecutorMock.MEDIA_DVD3).build());
 		assertNotNull(disc);
@@ -78,14 +78,14 @@ public class DiscControllerTest {
 	}
 
 	@Test
-	public void testGetTrayStatusNotMounted() throws IOException {
+	public void testGetTrayStatusNotMounted() throws IOException, InterruptedException {
 		TrayInfo trayInfo = discController.getTrayInfo(UnixCommandExecutorMock.DEVSR0);
 		assertNotNull(trayInfo);
 		assertEquals(TrayStatus.NOT_MOUNTED, trayInfo.getStatus());
 	}
 
 	@Test
-	public void testGetTrayStatusMounted() throws IOException {
+	public void testGetTrayStatusMounted() throws IOException, InterruptedException {
 		TrayInfo trayInfo = discController.getTrayInfo(UnixCommandExecutorMock.DEVSR1);
 		assertNotNull(trayInfo);
 		assertEquals(TrayStatus.MOUNTED, trayInfo.getStatus());

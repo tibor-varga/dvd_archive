@@ -33,8 +33,9 @@ public class DiscController {
 	 * 
 	 * @return list of /dev/sr0, /dev/sr1
 	 * @throws IOException
+	 * @throws InterruptedException
 	 */
-	public Set<String> getMountPoints() throws IOException {
+	public Set<String> getMountPoints() throws IOException, InterruptedException {
 		// String cmd = "lshw -C disk | grep sr | cut -d \":\" -f 2 | sort -u";
 
 		ExecResult commandResult = commandExecutor.execute(UnixCommands.LSHW, "/dev/sr*");
@@ -49,8 +50,9 @@ public class DiscController {
 	 * @param trayInfo
 	 * @return disc information
 	 * @throws IOException
+	 * @throws InterruptedException
 	 */
-	public Disc getDisc(String mountPoint, TrayInfo trayInfo) throws IOException {
+	public Disc getDisc(String mountPoint, TrayInfo trayInfo) throws IOException, InterruptedException {
 		String cmd = String.format(UnixCommands.BLKID, mountPoint);
 		ExecResult commandResult = commandExecutor.execute(cmd, null);
 		// extract disc info
@@ -67,8 +69,9 @@ public class DiscController {
 	 * 
 	 * @param mountPoint
 	 * @throws IOException
+	 * @throws InterruptedException
 	 */
-	public void openDisc(String mountPoint) throws IOException {
+	public void openDisc(String mountPoint) throws IOException, InterruptedException {
 		String cmd = String.format(UnixCommands.EJECT, mountPoint);
 		commandExecutor.execute(cmd, null);
 	}
@@ -78,8 +81,9 @@ public class DiscController {
 	 * 
 	 * @param mountPoint
 	 * @throws IOException
+	 * @throws InterruptedException
 	 */
-	public void closeDisc(String mountPoint) throws IOException {
+	public void closeDisc(String mountPoint) throws IOException, InterruptedException {
 		String cmd = String.format(UnixCommands.EJECT_CLOSE, mountPoint);
 		commandExecutor.execute(cmd, null);
 	}
@@ -91,8 +95,9 @@ public class DiscController {
 	 * 
 	 * @param mountPoint
 	 * @throws IOException
+	 * @throws InterruptedException
 	 */
-	public TrayInfo getTrayInfo(String mountPoint) throws IOException {
+	public TrayInfo getTrayInfo(String mountPoint) throws IOException, InterruptedException {
 		String cmd = String.format(UnixCommands.EJECT_STATUS, mountPoint);
 		ExecResult commandResult = commandExecutor.execute(cmd, "mounted");
 		// extract disc info

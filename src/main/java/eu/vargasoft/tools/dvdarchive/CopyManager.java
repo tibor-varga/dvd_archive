@@ -38,7 +38,7 @@ public class CopyManager {
 	@Autowired
 	ConfigurationProperties configProperties;
 
-	public HashMap<String, CopyResult> copyAllDiscs() throws IOException {
+	public HashMap<String, CopyResult> copyAllDiscs() throws IOException, InterruptedException {
 		HashMap<String, CopyResult> copyStatus = new HashMap<String, CopyResult>();
 		Set<String> mountPoints = discController.getMountPoints();
 		for (String mountPoint : mountPoints) {
@@ -48,7 +48,7 @@ public class CopyManager {
 		return copyStatus;
 	}
 
-	public CopyResult copyDisk(String mountPoint) throws IOException {
+	public CopyResult copyDisk(String mountPoint) throws IOException, InterruptedException {
 		log.info("processing mount point: {}", mountPoint);
 		TrayInfo trayInfo = discController.getTrayInfo(mountPoint);
 		log.debug("trayStatus: {}", trayInfo);

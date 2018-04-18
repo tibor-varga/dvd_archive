@@ -6,6 +6,6 @@ import eu.vargasoft.tools.dvdarchive.model.ExecResult;
 
 public interface UnixCommandExecutorInterface {
 
-	ExecResult execute(String command, String stdoutFilter) throws IOException;
+	ExecResult execute(String command, String stdoutFilter) throws IOException, InterruptedException;
 
 }

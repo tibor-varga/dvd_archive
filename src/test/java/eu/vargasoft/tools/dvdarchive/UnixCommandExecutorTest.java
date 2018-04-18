@@ -23,7 +23,7 @@ public class UnixCommandExecutorTest {
 	private UnixCommandExecutorInterface commandExecutor;
 
 	@Test
-	public void testExecute() throws IOException {
+	public void testExecute() throws IOException, InterruptedException {
 
 		String cmd = "lshw -C disk";
 		ExecResult commandResult = commandExecutor.execute(cmd, "/dev/sr*");

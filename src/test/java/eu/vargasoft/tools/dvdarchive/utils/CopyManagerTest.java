@@ -29,7 +29,7 @@ public class CopyManagerTest {
 	private CopyManager copyManager;
 
 	@Test
-	public void testCopySr0() throws IOException {
+	public void testCopySr0() throws IOException, InterruptedException {
 		CopyResult result = copyManager.copyDisk(UnixCommandExecutorMock.DEVSR1);
 		Disc disc = checkCopyResult(result);
 
@@ -51,7 +51,7 @@ public class CopyManagerTest {
 	}
 
 	@Test
-	public void testCopyAllDisk() throws IOException {
+	public void testCopyAllDisk() throws IOException, InterruptedException {
 		HashMap<String, CopyResult> result = copyManager.copyAllDiscs();
 		assertNotNull(result);
 		assertEquals(4, result.size());
