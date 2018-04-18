@@ -43,9 +43,9 @@ public class CopyManagerTest {
 		ExecResult execResult = result.getExecResult();
 		assertNotNull(execResult);
 		if (disc.getType() == DiscType.UDF) {
-			assertTrue(execResult.getStdOut().get(0).contains(" cp "));
-		} else if (disc.getType() == DiscType.ISO9660) {
 			assertTrue(execResult.getStdOut().get(0).contains(" dd "));
+		} else if (disc.getType() == DiscType.ISO9660) {
+			assertTrue(execResult.getStdOut().get(0).contains(" cp "));
 		}
 		return disc;
 	}
