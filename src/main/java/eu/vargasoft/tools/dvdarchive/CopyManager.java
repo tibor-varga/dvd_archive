@@ -56,7 +56,7 @@ public class CopyManager {
 			// get disc info
 			Disc disc = discController.getDisc(mountPoint, trayInfo);
 
-			log.debug("disc info: {}", disc);
+			log.info("disc info: {}", disc);
 			DiscCopyUnixCommand copyCommand = DiscCopyUnixCommandFactory.createUnixCommand(disc.getType());
 			log.debug("copy command: {}", copyCommand);
 
