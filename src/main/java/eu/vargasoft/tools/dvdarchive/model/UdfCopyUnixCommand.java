@@ -17,7 +17,7 @@ public class UdfCopyUnixCommand implements DiscCopyUnixCommand {
 	 * @see eu.vargasoft.tools.dvdarchive.DiscCopyUnixCommand#getUnixCommand()
 	 */
 	@Override
-	public String getUnixCommand(String source, String destination) {
-		return String.format(UnixCommands.DD, source, destination);
+	public String getUnixCommand(final Disc disc, final String destination) {
+		return String.format(UnixCommands.DD, disc.getMountPoint(), destination);
 	}
 }

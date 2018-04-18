@@ -66,7 +66,7 @@ public class CopyManager {
 			commandExecutor.execute(String.format(UnixCommands.MKDIR, targetDir), null);
 
 			// execute copy
-			ExecResult copyResult = commandExecutor.execute(copyCommand.getUnixCommand(mountPoint, targetDir), null);
+			ExecResult copyResult = commandExecutor.execute(copyCommand.getUnixCommand(disc, targetDir), null);
 			log.info("Copy finished: {}", copyResult);
 			return CopyResult.builder().disc(disc).execResult(copyResult).build();
 		} else {
