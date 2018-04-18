@@ -3,6 +3,7 @@
  */
 package eu.vargasoft.tools.dvdarchive.model;
 
+import eu.vargasoft.tools.dvdarchive.utils.UnixCommandExecutorHelper;
 import eu.vargasoft.tools.dvdarchive.utils.UnixCommands;
 
 /**
@@ -18,6 +19,7 @@ public class UdfCopyUnixCommand implements DiscCopyUnixCommand {
 	 */
 	@Override
 	public String getUnixCommand(final Disc disc, final String destination) {
-		return String.format(UnixCommands.DD, disc.getMountPoint(), destination);
+		return String.format(UnixCommands.DD, disc.getMountPoint(), destination,
+				UnixCommandExecutorHelper.generateDirectoryNameFromDiscLabel(disc.getLabel()));
 	}
 }
