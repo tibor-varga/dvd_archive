@@ -4,8 +4,15 @@
 package eu.vargasoft.tools.dvdarchive;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -38,7 +45,7 @@ public class CopyManager {
 	@Autowired
 	ConfigurationProperties configProperties;
 
-	public HashMap<String, CopyResult> copyAllDiscs() throws IOException, InterruptedException {
+	public HashMap<String, CopyResult> copyAllDiscsSingleThread() throws IOException, InterruptedException {
 		HashMap<String, CopyResult> copyStatus = new HashMap<String, CopyResult>();
 		Set<String> mountPoints = discController.getMountPoints();
 		for (String mountPoint : mountPoints) {
@@ -47,6 +54,51 @@ public class CopyManager {
 			eject(mountPoint);
 		}
 		return copyStatus;
+	}
+
+	public HashMap<String, CopyResult> copyAllDiscs() throws IOException, InterruptedException, ExecutionException {
+		Set<String> mountPoints = discController.getMountPoints();
+		HashMap<String, Future<CopyResult>> futures = new HashMap<String, Future<CopyResult>>();
+
+		ExecutorService executor = Executors.newFixedThreadPool(5);
+
+		for (String mountPoint : mountPoints) {
+			Callable<CopyResult> task = () -> {
+				try {
+					return copyDisk(mountPoint);
+				} catch (InterruptedException e) {
+					throw new IllegalStateException("task interrupted", e);
+				}
+			};
+
+			Future<CopyResult> future = executor.submit(task);
+			futures.put(mountPoint, future);
+
+		}
+		// waiting for all threads to finish
+		checkFuturesAllDone(futures.values());
+
+		HashMap<String, CopyResult> copyStatus = new HashMap<String, CopyResult>();
+		for (Entry<String, Future<CopyResult>> futureRecord : futures.entrySet()) {
+			String mountPoint = futureRecord.getKey();
+			copyStatus.put(mountPoint, futureRecord.getValue().get());
+			eject(mountPoint);
+		}
+
+		return copyStatus;
+	}
+
+	private void checkFuturesAllDone(Collection<Future<CopyResult>> collection) {
+		log.debug("checking futures");
+
+		boolean allDone;
+		do {
+			allDone = true;
+			for (Future<CopyResult> future : collection) {
+				allDone = allDone && future.isDone();
+				log.info("future: {}, allDone: {}", future.isDone(), allDone);
+			}
+		} while (allDone);
 	}
 
 	private void eject(String mountPoint) throws IOException, InterruptedException {

@@ -39,7 +39,7 @@ public class UnixCommandExecutorMock implements UnixCommandExecutorInterface {
 	public final static String GET_EJECT_STATUS_SR3_MOUNTED = String.format(UnixCommands.EJECT_STATUS, DEVSR3);
 
 	@Override
-	public ExecResult execute(String command, String stdoutFilter) throws IOException {
+	public ExecResult execute(String command, String stdoutFilter) throws IOException, InterruptedException {
 		// TODO refactor to Command or Visitor pattern
 		log.info("executing command: {} with stdout filter: {}", command, stdoutFilter);
 		if (command.equals(GETDISC_SR0)) {
@@ -85,6 +85,7 @@ public class UnixCommandExecutorMock implements UnixCommandExecutorInterface {
 					.stdOut(Arrays.asList("eject: `/dev/sr3' is mounted at `/media/dvd3'")).build();
 
 		} else {
+			Thread.sleep(2000);
 			log.error("unknown command: " + command);
 			return ExecResult.builder().exitValue(1).stdOut(Arrays.asList("unknown command: " + command)).build();
 		}
