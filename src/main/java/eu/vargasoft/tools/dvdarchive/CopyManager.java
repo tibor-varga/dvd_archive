@@ -85,6 +85,7 @@ public class CopyManager {
 			eject(mountPoint);
 		}
 
+		executor.shutdown();
 		return copyStatus;
 	}
 

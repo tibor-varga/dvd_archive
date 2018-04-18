@@ -64,3 +64,15 @@ blkid /dev/sr1
 
 ## DVD into ISO
 dd if=/dev/cdrom of=image_name.iso
+
+# Ubuntu settings
+## if root pwd request on dvd mount
+http://manpages.ubuntu.com/manpages/bionic/man8/pklocalauthority.8.html 
+sudo vi /var/lib/polkit-1/localauthority/50-local.d/10-desktop-policy.pkla
+[udisks]
+Identity=unix-group:users
+Action=org.freedesktop.udisks*
+ResultAny=yes
+ResultInactive=no
+ResultActive=yes
+
