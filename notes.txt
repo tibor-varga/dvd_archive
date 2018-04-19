@@ -1,0 +1,100 @@
+Taskboard ---------------------------------------------------------
+	DONE Profile introduce for UnixCommandExecutor versions
+	DONE get mount points
+	DONE get disc info
+	DONE command for open tray
+	DONE command for close tray
+	DONE copy commands for different type of dvds
+	DONE implementation of CopyManager
+	DONE Fix CopyManagerTest tests
+	DONE Jenkins onto rechner
+	DONE parameters from properties
+	DONE define target directories for cp and dd unix commands
+	DONE parallelizatin of copy tasks
+	DONE activate Sonarqube
+
+	Todo refactor mountPoint->drive, directory->mountPoint
+	Todo refactor Check System (unix commands, target dir, etc.)
+	Todo IT tests with real dvds
+	Todo implementation of Audo CD Support
+	Todo Profiles in Spring Boot Start missing
+Taskboard ---------------------------------------------------------
+
+# dvd_archive
+archive cds, dvds
+
+Type      Format    Drive       Tool      Example
+CD        cdda      /dev/sr0    cdrdao    cdrdao copy --device /dev/sr0 aa.bin
+DVD Data  udf       /dev/sr1    cp        cp -r /dev/sr0/  /tmp/xxx
+DVD Video iso9660   /dev/sr2    dd        dd if=/dev/sr2 of=/tmp/dvd2.iso
+------------------------------------
+## Useful commands
+### cat /proc/sys/dev/cdrom/info
+CD-ROM information, Id: cdrom.c 3.20 2003/12/17
+
+drive name:		sr2	sr1	sr0
+drive speed:		125	48	40
+drive # of slots:	1	1	1
+Can close tray:		1	1	1
+Can open tray:		1	1	1
+Can lock tray:		1	1	1
+Can change speed:	1	1	1
+Can select disk:	0	0	0
+Can read multisession:	1	1	1
+Can read MCN:		1	1	1
+Reports media changed:	1	1	1
+Can play audio:		1	1	1
+Can write CD-R:		1	1	1
+Can write CD-RW:	1	1	1
+Can read DVD:		1	1	1
+Can write DVD-R:	1	1	1
+Can write DVD-RAM:	1	1	1
+Can read MRW:		0	0	0
+Can write MRW:		0	0	0
+Can write RAM:		1	1	1
+---------------------------
+### open  drive 
+eject /dev/sr0
+### close drive
+eject -t /dev/sr0
+
+### eject status
+eject -n -v /dev/sr0
+#### mounted
+eject: device name is `/dev/sr0'
+eject: expanded name is `/dev/sr0'
+eject: `/dev/sr0' is mounted at `/media/dvd0'
+eject: device is `/dev/sr0'
+eject: exiting due to -n/--noop option
+
+#### not mounted
+eject: device name is `/dev/sr0'
+eject: expanded name is `/dev/sr0'
+eject: `/dev/sr0' is not mounted
+eject: `/dev/sr0' is not a mount point
+eject: device is `/dev/sr0'
+eject: exiting due to -n/--noop option
+---------------------
+
+
+### find out, if it is a CD 
+cdrdao disk-info --device /dev/sr0
+
+### info of DVD
+blkid /dev/sr1
+/dev/sr1: UUID="2007-08-17-20-51-00-00" LABEL="Filmek 31. mese" TYPE="iso9660"
+
+## DVD into ISO
+dd if=/dev/cdrom of=image_name.iso
+
+# Ubuntu settings
+## if root pwd request on dvd mount
+http://manpages.ubuntu.com/manpages/bionic/man8/pklocalauthority.8.html 
+sudo vi /var/lib/polkit-1/localauthority/50-local.d/10-desktop-policy.pkla
+[udisks]
+Identity=unix-group:users
+Action=org.freedesktop.udisks*
+ResultAny=yes
+ResultInactive=no
+ResultActive=yes
+
