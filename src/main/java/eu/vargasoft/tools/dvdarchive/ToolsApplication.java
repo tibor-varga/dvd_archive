@@ -1,6 +1,6 @@
 package eu.vargasoft.tools.dvdarchive;
 
-import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -44,7 +44,7 @@ public class ToolsApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		HashMap<String, CopyResult> result = copyManager.copyAllDiscs();
+		Map<String, CopyResult> result = copyManager.copyAllDiscs();
 		log.info("result of all disc copy: {}", result);
 	}
 

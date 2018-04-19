@@ -6,6 +6,7 @@ package eu.vargasoft.tools.dvdarchive;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -45,10 +46,10 @@ public class CopyManager {
 	@Autowired
 	ConfigurationProperties configProperties;
 
-	public HashMap<String, CopyResult> copyAllDiscs() throws IOException, InterruptedException, ExecutionException {
+	public Map<String, CopyResult> copyAllDiscs() throws IOException, InterruptedException, ExecutionException {
 		Set<String> mountPoints = discController.getMountPoints();
 
-		HashMap<String, Future<CopyResult>> copyTasks = new HashMap<String, Future<CopyResult>>();
+		Map<String, Future<CopyResult>> copyTasks = new HashMap<>();
 
 		// initializing parallel execution
 		// TODO refactor parameter should come from properties
@@ -73,7 +74,7 @@ public class CopyManager {
 		checkFuturesAllDone(copyTasks.values());
 
 		// generating copyResults and ejecting cd
-		HashMap<String, CopyResult> copyStatus = new HashMap<String, CopyResult>();
+		Map<String, CopyResult> copyStatus = new HashMap<>();
 		for (Entry<String, Future<CopyResult>> copyTaskEntry : copyTasks.entrySet()) {
 			String mountPoint = copyTaskEntry.getKey();
 			copyStatus.put(mountPoint, copyTaskEntry.getValue().get());

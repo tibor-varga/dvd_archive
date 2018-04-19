@@ -18,25 +18,25 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 public class UnixCommandExecutorMock implements UnixCommandExecutorInterface {
-	public final static String DEVSR0 = "/dev/sr0";
-	public final static String DEVSR1 = "/dev/sr1";
-	public final static String DEVSR2 = "/dev/sr2";
-	public final static String DEVSR3 = "/dev/sr3";
+	public static final String DEVSR0 = "/dev/sr0";
+	public static final String DEVSR1 = "/dev/sr1";
+	public static final String DEVSR2 = "/dev/sr2";
+	public static final String DEVSR3 = "/dev/sr3";
 
-	public final static String MEDIA_DVD0 = "/media/dvd0";
-	public final static String MEDIA_DVD1 = "/media/dvd1";
-	public final static String MEDIA_DVD2 = "/media/dvd2";
-	public final static String MEDIA_DVD3 = "/media/dvd3";
+	public static final String MEDIA_DVD0 = "/media/dvd0";
+	public static final String MEDIA_DVD1 = "/media/dvd1";
+	public static final String MEDIA_DVD2 = "/media/dvd2";
+	public static final String MEDIA_DVD3 = "/media/dvd3";
 
-	public final static String GETDISC_SR0 = String.format(UnixCommands.BLKID, DEVSR0);
-	public final static String GETDISC_SR1 = String.format(UnixCommands.BLKID, DEVSR1);
-	public final static String GETDISC_SR2 = String.format(UnixCommands.BLKID, DEVSR2);
-	public final static String GETDISC_SR3 = String.format(UnixCommands.BLKID, DEVSR3);
+	public static final String GETDISC_SR0 = String.format(UnixCommands.BLKID, DEVSR0);
+	public static final String GETDISC_SR1 = String.format(UnixCommands.BLKID, DEVSR1);
+	public static final String GETDISC_SR2 = String.format(UnixCommands.BLKID, DEVSR2);
+	public static final String GETDISC_SR3 = String.format(UnixCommands.BLKID, DEVSR3);
 
-	public final static String GET_EJECT_STATUS_SR0_NOT_MOUNTED = String.format(UnixCommands.EJECT_STATUS, DEVSR0);
-	public final static String GET_EJECT_STATUS_SR1_MOUNTED = String.format(UnixCommands.EJECT_STATUS, DEVSR1);
-	public final static String GET_EJECT_STATUS_SR2_MOUNTED = String.format(UnixCommands.EJECT_STATUS, DEVSR2);
-	public final static String GET_EJECT_STATUS_SR3_MOUNTED = String.format(UnixCommands.EJECT_STATUS, DEVSR3);
+	public static final String GET_EJECT_STATUS_SR0_NOT_MOUNTED = String.format(UnixCommands.EJECT_STATUS, DEVSR0);
+	public static final String GET_EJECT_STATUS_SR1_MOUNTED = String.format(UnixCommands.EJECT_STATUS, DEVSR1);
+	public static final String GET_EJECT_STATUS_SR2_MOUNTED = String.format(UnixCommands.EJECT_STATUS, DEVSR2);
+	public static final String GET_EJECT_STATUS_SR3_MOUNTED = String.format(UnixCommands.EJECT_STATUS, DEVSR3);
 
 	@Override
 	public ExecResult execute(String command, String stdoutFilter) throws IOException, InterruptedException {
@@ -89,5 +89,4 @@ public class UnixCommandExecutorMock implements UnixCommandExecutorInterface {
 			return ExecResult.builder().exitValue(1).stdOut(Arrays.asList("unknown command: " + command)).build();
 		}
 	}
-
 }

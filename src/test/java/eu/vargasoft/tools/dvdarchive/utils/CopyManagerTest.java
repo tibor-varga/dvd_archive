@@ -5,7 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import org.junit.Test;
@@ -55,7 +55,7 @@ public class CopyManagerTest {
 
 	@Test
 	public void testCopyAllDisk() throws IOException, InterruptedException, ExecutionException {
-		HashMap<String, CopyResult> result = copyManager.copyAllDiscs();
+		Map<String, CopyResult> result = copyManager.copyAllDiscs();
 		assertNotNull(result);
 		assertEquals(4, result.size());
 

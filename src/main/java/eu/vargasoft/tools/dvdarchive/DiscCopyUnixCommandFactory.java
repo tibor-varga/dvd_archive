@@ -13,6 +13,11 @@ import eu.vargasoft.tools.dvdarchive.model.UdfCopyUnixCommand;
  *
  */
 public class DiscCopyUnixCommandFactory {
+
+	private DiscCopyUnixCommandFactory() {
+		throw new IllegalStateException("Utility class");
+	}
+
 	public static DiscCopyUnixCommand createUnixCommand(DiscType discType) {
 		switch (discType) {
 		case UDF:

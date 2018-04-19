@@ -26,7 +26,7 @@ import eu.vargasoft.tools.dvdarchive.utils.UnixCommands;
 @Component
 public class DiscController {
 	@Autowired
-	UnixCommandExecutorInterface commandExecutor;
+	private UnixCommandExecutorInterface commandExecutor;
 
 	/**
 	 * lshw -C disk | grep sr | cut -d \":\" -f 2 | sort -u
@@ -36,8 +36,6 @@ public class DiscController {
 	 * @throws InterruptedException
 	 */
 	public Set<String> getMountPoints() throws IOException, InterruptedException {
-		// String cmd = "lshw -C disk | grep sr | cut -d \":\" -f 2 | sort -u";
-
 		ExecResult commandResult = commandExecutor.execute(UnixCommands.LSHW, "/dev/sr*");
 		return UnixCommandExecutorHelper.getExactMountPoints(commandResult);
 	}
@@ -56,12 +54,13 @@ public class DiscController {
 		String cmd = String.format(UnixCommands.BLKID, mountPoint);
 		ExecResult commandResult = commandExecutor.execute(cmd, null);
 		// extract disc info
-		if (commandResult.getStdOut().size() > 0) {
+		if (commandResult.getStdOut().isEmpty()) {
+			return null;
+		} else {
 			String[] splits = commandResult.getStdOut().get(0).split("\"");
 			return Disc.builder().label(splits[3]).mountPoint(mountPoint)
 					.type(DiscType.valueOf(splits[5].toUpperCase())).trayInfo(trayInfo).build();
 		}
-		return null;
 	}
 
 	/**
@@ -101,7 +100,9 @@ public class DiscController {
 		String cmd = String.format(UnixCommands.EJECT_STATUS, mountPoint);
 		ExecResult commandResult = commandExecutor.execute(cmd, "mounted");
 		// extract disc info
-		if (commandResult.getStdOut().size() > 0) {
+		if (commandResult.getStdOut().isEmpty()) {
+			throw new InvalidParameterException("Error by getting status for: " + mountPoint);
+		} else {
 			String commandResultFirstLine = commandResult.getStdOut().get(0);
 			if (commandResultFirstLine.contains("not")) {
 				return TrayInfo.builder().status(TrayStatus.NOT_MOUNTED).build();
@@ -109,8 +110,6 @@ public class DiscController {
 				String directory = commandResultFirstLine.split("`")[2].replaceAll("'", "");
 				return TrayInfo.builder().status(TrayStatus.MOUNTED).directory(directory).build();
 			}
-		} else {
-			throw new InvalidParameterException("Error by getting status for: " + mountPoint);
 		}
 	}
 }

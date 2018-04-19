@@ -14,6 +14,9 @@ import eu.vargasoft.tools.dvdarchive.model.ExecResult;
  *
  */
 public class UnixCommandExecutorHelper {
+	private UnixCommandExecutorHelper() {
+		throw new IllegalStateException("Utility class");
+	}
 
 	/**
 	 * extracting distinct mount point information from stdout<br>
@@ -31,7 +34,7 @@ public class UnixCommandExecutorHelper {
 	 */
 	public static Set<String> getExactMountPoints(ExecResult commandResult) {
 		// TODO with java 8
-		Set<String> result = new HashSet<String>();
+		Set<String> result = new HashSet<>();
 		for (String string : commandResult.getStdOut()) {
 			String[] splits = string.split(":");
 			if (splits.length < 2) {
