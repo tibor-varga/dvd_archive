@@ -45,21 +45,14 @@ public class CopyManager {
 	@Autowired
 	ConfigurationProperties configProperties;
 
-	public HashMap<String, CopyResult> copyAllDiscsSingleThread() throws IOException, InterruptedException {
-		HashMap<String, CopyResult> copyStatus = new HashMap<String, CopyResult>();
-		Set<String> mountPoints = discController.getMountPoints();
-		for (String mountPoint : mountPoints) {
-			CopyResult copyResult = copyDisk(mountPoint);
-			copyStatus.put(mountPoint, copyResult);
-			eject(mountPoint);
-		}
-		return copyStatus;
-	}
-
 	public HashMap<String, CopyResult> copyAllDiscs() throws IOException, InterruptedException, ExecutionException {
 		Set<String> mountPoints = discController.getMountPoints();
+
+		// TODO refactor rename futures
 		HashMap<String, Future<CopyResult>> futures = new HashMap<String, Future<CopyResult>>();
 
+		// initializing parallel execution
+		// TODO refactor parameter should come from properties
 		ExecutorService executor = Executors.newFixedThreadPool(5);
 
 		for (String mountPoint : mountPoints) {
@@ -85,19 +78,18 @@ public class CopyManager {
 			eject(mountPoint);
 		}
 
+		// shutting down the executor, to let the app to exit
 		executor.shutdown();
 		return copyStatus;
 	}
 
 	private void checkFuturesAllDone(Collection<Future<CopyResult>> collection) {
-		log.debug("checking futures");
-
 		boolean allDone;
 		do {
 			allDone = true;
+			// TODO refactor: optimize exit condition
 			for (Future<CopyResult> future : collection) {
 				allDone = allDone && future.isDone();
-				log.info("future: {}, allDone: {}", future.isDone(), allDone);
 			}
 		} while (allDone);
 	}

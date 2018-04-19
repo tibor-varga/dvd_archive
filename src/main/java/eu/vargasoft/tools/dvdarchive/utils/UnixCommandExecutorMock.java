@@ -85,7 +85,6 @@ public class UnixCommandExecutorMock implements UnixCommandExecutorInterface {
 					.stdOut(Arrays.asList("eject: `/dev/sr3' is mounted at `/media/dvd3'")).build();
 
 		} else {
-			Thread.sleep(2000);
 			log.error("unknown command: " + command);
 			return ExecResult.builder().exitValue(1).stdOut(Arrays.asList("unknown command: " + command)).build();
 		}
