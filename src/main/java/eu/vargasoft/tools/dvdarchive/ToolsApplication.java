@@ -34,8 +34,8 @@ public class ToolsApplication implements CommandLineRunner {
 	// TODO Taskboard DONE parameters from properties
 	// TODO Taskboard DONE define target directories for cp and dd unix commands
 	// TODO Taskboard DONE parallelizatin of copy tasks
+	// TODO Taskboard DONE activate Sonarqube
 
-	// TODO Taskboard Todo activate Sonarqube
 	// TODO Taskboard Todo refactor mountPoint->drive, directory->mountPoint
 	// TODO Taskboard Todo refactor Check System (unix commands, target dir, etc.)
 	// TODO Taskboard Todo IT tests with real dvds
