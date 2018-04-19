@@ -33,14 +33,14 @@ public class ToolsApplication implements CommandLineRunner {
 	// TODO Taskboard DONE Jenkins onto rechner
 	// TODO Taskboard DONE parameters from properties
 	// TODO Taskboard DONE define target directories for cp and dd unix commands
+	// TODO Taskboard DONE parallelizatin of copy tasks
 
-	// TODO Taskboard Todo refactor mountPoint->drive, directory->mountPoint
 	// TODO Taskboard Todo activate Sonarqube
+	// TODO Taskboard Todo refactor mountPoint->drive, directory->mountPoint
+	// TODO Taskboard Todo refactor Check System (unix commands, target dir, etc.)
 	// TODO Taskboard Todo IT tests with real dvds
 	// TODO Taskboard Todo implementation of Audo CD Support
-	// TODO Taskboard Todo parallelizatin of copy tasks
 	// TODO Taskboard Todo Profiles in Spring Boot Start missing
-	// TODO Taskboard Todo Check System (unix commands, target dir, etc.)
 
 	@Override
 	public void run(String... args) throws Exception {
