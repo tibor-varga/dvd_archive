@@ -86,13 +86,16 @@ public class CopyManager {
 		return copyStatus;
 	}
 
-	private void checkFuturesAllDone(Collection<Future<CopyResult>> collection) {
+	private void checkFuturesAllDone(Collection<Future<CopyResult>> tasks) {
 		boolean allDone;
 		do {
 			allDone = true;
-			// TODO refactor: optimize exit condition
-			for (Future<CopyResult> future : collection) {
-				allDone = allDone && future.isDone();
+			for (Future<CopyResult> task : tasks) {
+				allDone = allDone && task.isDone();
+				// optimizing loop with exiting on first not done task
+				if (!allDone) {
+					break;
+				}
 			}
 		} while (allDone);
 	}
