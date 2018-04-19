@@ -52,8 +52,7 @@ public class CopyManager {
 		Map<String, Future<CopyResult>> copyTasks = new HashMap<>();
 
 		// initializing parallel execution
-		// TODO refactor parameter should come from properties
-		ExecutorService executor = Executors.newFixedThreadPool(5);
+		ExecutorService executor = Executors.newFixedThreadPool(configProperties.getMaxDeviceNumber());
 
 		for (String mountPoint : mountPoints) {
 			Callable<CopyResult> task = () -> {

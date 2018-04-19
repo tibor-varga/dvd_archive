@@ -16,4 +16,5 @@ import lombok.Data;
 @Data
 public class ConfigurationProperties {
 	private String mainTargetDir;
+	private int maxDeviceNumber;
 }
