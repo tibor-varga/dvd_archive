@@ -50,7 +50,6 @@ public class CopyManager {
 		Set<String> mountPoints = discController.getMountPoints();
 
 		Map<String, Future<CopyResult>> copyTasks = new HashMap<>();
-		//
 		// initializing parallel execution
 		// TODO refactor parameter should come from properties
 		ExecutorService executor = Executors.newFixedThreadPool(5);
