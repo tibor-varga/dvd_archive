@@ -8,8 +8,9 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>tools</name>
-	<description>DVD Archive Project</description>
+	<name>dvdarchive</name>
+	<description>DVD Archive Project
+dvarchive project to archive hundreds of dvds</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
