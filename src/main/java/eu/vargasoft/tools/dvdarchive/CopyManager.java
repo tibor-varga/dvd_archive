@@ -48,8 +48,7 @@ public class CopyManager {
 	public HashMap<String, CopyResult> copyAllDiscs() throws IOException, InterruptedException, ExecutionException {
 		Set<String> mountPoints = discController.getMountPoints();
 
-		// TODO refactor rename futures
-		HashMap<String, Future<CopyResult>> futures = new HashMap<String, Future<CopyResult>>();
+		HashMap<String, Future<CopyResult>> copyTasks = new HashMap<String, Future<CopyResult>>();
 
 		// initializing parallel execution
 		// TODO refactor parameter should come from properties
@@ -60,21 +59,24 @@ public class CopyManager {
 				try {
 					return copyDisk(mountPoint);
 				} catch (InterruptedException e) {
-					throw new IllegalStateException("task interrupted", e);
+					log.warn("Interrupted!", e);
+					Thread.currentThread().interrupt();
 				}
+				return null;
 			};
 
 			Future<CopyResult> future = executor.submit(task);
-			futures.put(mountPoint, future);
+			copyTasks.put(mountPoint, future);
 
 		}
 		// waiting for all threads to finish
-		checkFuturesAllDone(futures.values());
+		checkFuturesAllDone(copyTasks.values());
 
+		// generating copyResults and ejecting cd
 		HashMap<String, CopyResult> copyStatus = new HashMap<String, CopyResult>();
-		for (Entry<String, Future<CopyResult>> futureRecord : futures.entrySet()) {
-			String mountPoint = futureRecord.getKey();
-			copyStatus.put(mountPoint, futureRecord.getValue().get());
+		for (Entry<String, Future<CopyResult>> copyTaskEntry : copyTasks.entrySet()) {
+			String mountPoint = copyTaskEntry.getKey();
+			copyStatus.put(mountPoint, copyTaskEntry.getValue().get());
 			eject(mountPoint);
 		}
 
